@@ -1,0 +1,466 @@
+/* ===============================
+   Battlebound: Multiverse Annihilation Draft
+================================= */
+
+:root {
+  --bg-dark: #0e1117;
+  --bg-panel: #161b22;
+  --bg-soft: #1f2633;
+  --text-main: #e6edf3;
+  --text-dim: #9da7b3;
+  --accent: #7dd3fc;
+  --accent-2: #a78bfa;
+  --danger: #f87171;
+  --success: #34d399;
+  --warning: #facc15;
+  --border: #2d3443;
+  --tooltip-bg: rgba(0,0,0,0.85);
+  --tooltip-text: #e6edf3;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+  background: linear-gradient(180deg, #0b0e14, #0e1117);
+  color: var(--text-main);
+}
+
+/* ===============================
+   HEADINGS & TEXT
+================================= */
+
+h1, h2, h3 {
+  margin-top: 0;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+}
+
+p {
+  color: var(--text-dim);
+}
+
+/* ===============================
+   BUTTONS
+================================= */
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 18px;
+  font-weight: 600;
+  background: var(--accent);
+  color: #000;
+  transition: transform 0.1s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(125, 211, 252, 0.25);
+}
+
+button:active {
+  transform: translateY(0);
+  opacity: 0.9;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #000;
+}
+
+.btn-secondary {
+  background: var(--bg-soft);
+  color: var(--accent);
+  border: 1px solid var(--border);
+}
+
+/* ===============================
+   INPUTS
+================================= */
+
+input, select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg-soft);
+  color: var(--text-main);
+  font-size: 1rem;
+}
+
+input::placeholder {
+  color: #7a8496;
+}
+
+/* ===============================
+   SCREENS
+================================= */
+
+.screen {
+  display: none;
+  padding: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.screen.active {
+  display: block;
+}
+
+/* ===============================
+   PANELS & MODALS
+================================= */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal.Hider {
+  display: none;
+}
+
+.modal-content {
+  max-width: 600px;
+  width: 90%;
+  background: var(--bg-panel);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.35);
+  animation: modalFadeIn 0.25s ease;
+}
+
+.close-btn {
+  float: right;
+  cursor: pointer;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--accent);
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+}
+
+.info-panel {
+  background: linear-gradient(
+    135deg,
+    rgba(125, 211, 252, 0.08),
+    rgba(167, 139, 250, 0.08)
+  );
+  border: 1px solid rgba(125, 211, 252, 0.25);
+}
+
+.info-panel ul {
+  padding-left: 20px;
+}
+
+.info-panel li {
+  margin-bottom: 6px;
+  color: var(--text-dim);
+}
+
+#info-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #000;
+  z-index: 100;
+}
+
+
+/* ===============================
+   SETUP FORM
+================================= */
+
+#setup-form {
+  display: grid;
+  gap: 16px;
+}
+
+#player-names-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+/* ===============================
+   EXECUTION PHASE
+================================= */
+
+#execution-entry-area {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+#execution-entry-area p {
+  font-size: 1.1rem;
+  color: var(--warning);
+}
+
+/* ===============================
+   DRAFT INFO
+================================= */
+
+.draft-header {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.status-box {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.status-box span {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* ===============================
+   UNIVERSE REVEAL
+================================= */
+
+#universe-container {
+  margin: 16px 0;
+  text-align: center;
+}
+
+#universe {
+  font-size: 1.6rem;
+  font-weight: 800;
+  padding: 14px;
+  border-radius: 14px;
+  background: radial-gradient(
+    circle at top,
+    rgba(167, 139, 250, 0.25),
+    rgba(125, 211, 252, 0.15)
+  );
+  border: 1px solid rgba(167, 139, 250, 0.4);
+  animation: revealPulse 1.2s ease;
+}
+
+.hidden {
+  display: none;
+}
+
+@keyframes revealPulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ===============================
+   DRAFT TABLE
+================================= */
+
+#draft-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow-x: auto;
+}
+
+#draft-table th, #draft-table td {
+  padding: 12px;
+  border: 1px solid var(--border);
+  text-align: center;
+  min-width: 120px;
+  position: relative;
+}
+
+/* Tooltip for role descriptions */
+#draft-table th[title] {
+  cursor: help;
+}
+
+#draft-table th[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  background: var(--tooltip-bg);
+  color: var(--tooltip-text);
+  padding: 6px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  font-size: 0.85rem;
+  z-index: 10;
+  opacity: 1;
+}
+
+#draft-table thead th {
+  background: var(--bg-soft);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+#draft-table tbody th {
+  background: #131926;
+  font-weight: 700;
+}
+
+#draft-table td {
+  background: #0f1420;
+}
+
+#draft-table td:empty::after {
+  content: "—";
+  color: #394255;
+}
+
+#draft-table td.executed {
+  color: var(--danger);
+}
+
+/* ===============================
+   PICK INPUT
+================================= */
+
+#pick-form {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+/* ===============================
+   ANOMALY MODAL
+================================= */
+
+#anomaly-container {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+#anomaly-container.Hider {
+  display: none;
+}
+
+#anomaly-container .panel {
+  max-width: 420px;
+  text-align: center;
+  border: 1px solid var(--accent-2);
+}
+
+#anomaly-message {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--accent-2);
+}
+
+/* ===============================
+   FINAL SCREEN
+================================= */
+
+#final-crews {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.crew-block {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.crew-block h3 {
+  margin-bottom: 10px;
+  color: var(--accent);
+}
+
+.crew-block p {
+  margin: 6px 0;
+}
+
+/* ===============================
+   CHATGPT PROMPT
+================================= */
+
+#chatgpt-prompt {
+  background: #020617;
+  color: #e5e7eb;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  white-space: pre-wrap;
+  max-height: 380px;
+  overflow-y: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", monospace;
+  font-size: 0.9rem;
+}
+
+/* ===============================
+   RESPONSIVE
+================================= */
+
+@media (max-width: 700px) {
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  #pick-form {
+    flex-direction: column;
+  }
+
+  #draft-table th,
+  #draft-table td {
+    font-size: 0.85rem;
+    padding: 8px;
+  }
+
+  #universe {
+    font-size: 1.3rem;
+  }
+}
