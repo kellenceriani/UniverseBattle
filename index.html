@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>LineupWars: Universe Battle</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="extra.css" />
 </head>
 <body>
 
@@ -101,12 +102,28 @@
 
         <hr />
 
-        <fieldset>
-          <legend>Extra Modes</legend>
-          <label><input type="checkbox" name="xtra-mode" value="anomaly" /> 🔮 Anomaly Shift</label><br />
-          <label><input type="checkbox" name="xtra-mode" value="execution" /> ☠️ Execution Order</label><br />
-          <label><input type="checkbox" name="xtra-mode" value="chaos" /> 🔀 Chaos Draft</label>
-        </fieldset>
+<fieldset class="extra-modes">
+  <legend>Extra Modes</legend>
+  
+  <label class="checkbox-container">
+    🔮 Anomaly Shift
+    <input type="checkbox" name="xtra-mode" value="anomaly" />
+    <span class="checkmark"></span>
+  </label>
+
+  <label class="checkbox-container">
+    ☠️ Execution Order
+    <input type="checkbox" name="xtra-mode" value="execution" />
+    <span class="checkmark"></span>
+  </label>
+
+  <label class="checkbox-container">
+    🔀 Chaos Draft
+    <input type="checkbox" name="xtra-mode" value="chaos" />
+    <span class="checkmark"></span>
+  </label>
+</fieldset>
+
 
         <button type="submit" class="btn-primary">Start Draft</button>
       </form>
@@ -190,11 +207,8 @@
 
       <div id="final-crews"></div>
 
-      <h2>🌌 Final Universe</h2>
-      <div id="final-universe"></div>
-
-      <h2>🤖 ChatGPT Battle Evaluation Prompt</h2>
-
+      <br>
+      <h2>🤖 ChatGPT Battle Evaluation Prompt</h2><h4><div id="final-universe"></div></h4>
       <div style="display:flex; flex-wrap:wrap; gap:0.5rem;">
         <pre
           id="chatgpt-prompt"
@@ -214,12 +228,31 @@
 
   </main>
 
-  <!-- Anomaly Shift Modal -->
-  <div id="anomaly-container" class="Hider panel">
-    <h2>🔮 Anomaly Shift</h2>
-    <p id="anomaly-message"></p>
-    <button id="anomaly-close-btn" class="btn-primary">Continue</button>
+<!-- Anomaly Shift Modal -->
+<div id="anomaly-container" class="Hider">
+  <div class="anomaly-backdrop"></div>
+
+  <div class="anomaly-modal">
+    <div class="anomaly-header">
+      <span class="anomaly-icon">🔮</span>
+      <h2>Anomaly Shift</h2>
+    </div>
+
+    <div class="anomaly-body">
+      <p id="anomaly-message"></p>
+    </div>
+
+    <div class="anomaly-footer">
+      <button id="anomaly-close-btn" class="btn-primary">Continue</button>
+    </div>
+
+    <!-- Decorative sparkles -->
+    <div class="sparkles">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
   </div>
+</div>
+
 
 <script>
   const infoBtn = document.getElementById('info-btn');

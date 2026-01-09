@@ -1,0 +1,323 @@
+/* ===============================
+   Extra Visual Enhancements for LineupWars
+================================= */
+
+/* ===============================
+   Cosmic Ambient Background
+================================= */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(20,25,40,0.8) 0%, rgba(14,17,23,1) 100%);
+  z-index: -2;
+  pointer-events: none;
+  animation: bgTwinkle 20s linear infinite;
+}
+
+@keyframes bgTwinkle {
+  0%, 100% { background-position: 0 0; }
+  50% { background-position: 100% 100%; }
+}
+
+/* Subtle particle stars using pseudo-elements */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(#fff 0.5px, transparent 0), radial-gradient(#fff 0.5px, transparent 0);
+  background-size: 20px 20px, 40px 40px;
+  background-position: 0 0, 10px 20px;
+  opacity: 0.08;
+  z-index: -1;
+  pointer-events: none;
+  animation: starTwinkle 15s linear infinite;
+}
+
+@keyframes starTwinkle {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(30px, -20px); }
+}
+
+/* ===============================
+   Universe Reveal Glow & Pulse
+================================= */
+#universe {
+  box-shadow: 0 0 30px rgba(125, 211, 252, 0.6), 0 0 50px rgba(167, 139, 250, 0.5);
+  background: radial-gradient(circle at 30% 30%, rgba(167,139,250,0.3), rgba(125,211,252,0.1) 70%);
+  transition: all 0.5s ease;
+}
+#universe-container:not(.hidden) #universe {
+  animation: universeReveal 1.5s ease forwards;
+}
+@keyframes universeReveal {
+  0% { transform: scale(0.7); opacity: 0; filter: blur(4px); }
+  100% { transform: scale(1); opacity: 1; filter: blur(0); }
+}
+
+/* ===============================
+   Current Player & Role Highlight
+================================= */
+.status-box span {
+  position: relative;
+  z-index: 0;
+}
+.status-box span::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(125,211,252,0.5), 0 0 25px rgba(167,139,250,0.4);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+.status-box span.current-player::after,
+.status-box span.current-role::after {
+  opacity: 1;
+  animation: pulseHighlight 1.2s ease-in-out infinite;
+}
+@keyframes pulseHighlight {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.1); opacity: 1; }
+}
+
+/* ===============================
+   Draft Table Pick Animations
+================================= */
+#draft-table td {
+  transition: background 0.4s ease, box-shadow 0.3s ease, transform 0.25s ease;
+}
+#draft-table td.filled {
+  background: linear-gradient(135deg, rgba(125,211,252,0.15), rgba(167,139,250,0.1));
+  box-shadow: 0 0 15px rgba(125,211,252,0.4), 0 0 25px rgba(167,139,250,0.3);
+  transform: scale(1.05);
+}
+#draft-table td.executed {
+  background: linear-gradient(135deg, rgba(248,113,113,0.2), rgba(248,113,113,0.1));
+  box-shadow: 0 0 12px rgba(248,113,113,0.5);
+  color: var(--danger);
+  font-weight: 700;
+}
+
+/* Animate new picks */
+@keyframes pickPop {
+  0% { transform: scale(0.8) rotate(-5deg); opacity: 0; }
+  60% { transform: scale(1.1) rotate(3deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); }
+}
+#draft-table td.filled { animation: pickPop 0.4s ease forwards; }
+
+/* ===============================
+   Modals & Panels Enhancement
+================================= */
+.modal-content, .panel {
+  background: linear-gradient(145deg, rgba(14,17,23,0.85), rgba(22,27,34,0.95));
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(125,211,252,0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.modal-content:hover, .panel:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(125,211,252,0.35), 0 8px 20px rgba(167,139,250,0.25);
+}
+
+/* ===============================
+   Buttons Glow & Hover
+================================= */
+button.btn-primary:hover {
+  box-shadow: 0 0 20px rgba(125,211,252,0.7), 0 0 35px rgba(167,139,250,0.6);
+}
+button.btn-secondary:hover {
+  box-shadow: 0 0 15px rgba(125,211,252,0.3);
+}
+
+/* ===============================
+   Crew Blocks Animation
+================================= */
+.crew-block {
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.crew-block:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 12px 25px rgba(125,211,252,0.35), 0 6px 15px rgba(167,139,250,0.25);
+}
+
+/* ===============================
+   ANOMALY SHIFT MODAL
+================================= */
+
+/* Container */
+#anomaly-container {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  overflow: hidden;
+  perspective: 1200px;
+}
+
+#anomaly-container.Hider {
+  display: none;
+}
+
+/* Backdrop: blur + cosmic vignette */
+.anomaly-backdrop {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(125,211,252,0.05) 0%, rgba(0,0,0,0.85) 100%);
+  backdrop-filter: blur(6px);
+  z-index: 1;
+  animation: backdropPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes backdropPulse {
+  0% { filter: blur(4px) brightness(0.95); }
+  50% { filter: blur(6px) brightness(1.05); }
+  100% { filter: blur(4px) brightness(0.95); }
+}
+
+/* Modal Window */
+.anomaly-modal {
+  position: relative;
+  z-index: 2;
+  max-width: 460px;
+  width: 90%;
+  background: radial-gradient(circle at top left, rgba(167,139,250,0.15), rgba(125,211,252,0.05));
+  border: 2px solid var(--accent-2);
+  border-radius: 20px;
+  padding: 32px 28px;
+  text-align: center;
+  box-shadow: 0 0 40px rgba(167,139,250,0.5), 0 0 80px rgba(125,211,252,0.4);
+  transform: scale(0);
+  animation: modalIn 0.8s forwards cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+/* Modal pop-in */
+@keyframes modalIn {
+  0% { transform: scale(0) rotateX(25deg); opacity: 0; }
+  60% { transform: scale(1.05) rotateX(0deg); opacity: 1; }
+  100% { transform: scale(1) rotateX(0deg); opacity: 1; }
+}
+
+/* Header */
+.anomaly-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.anomaly-header h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--accent-2);
+  text-shadow: 0 0 12px rgba(167,139,250,0.8), 0 0 24px rgba(125,211,252,0.6);
+  letter-spacing: 1px;
+}
+
+.anomaly-icon {
+  font-size: 3rem;
+  animation: iconGlow 1.5s infinite alternate;
+}
+
+@keyframes iconGlow {
+  0% { text-shadow: 0 0 8px var(--accent), 0 0 16px var(--accent-2); transform: scale(1); }
+  50% { text-shadow: 0 0 16px var(--accent-2), 0 0 32px var(--accent); transform: scale(1.1); }
+  100% { text-shadow: 0 0 8px var(--accent), 0 0 16px var(--accent-2); transform: scale(1); }
+}
+
+/* Body message */
+.anomaly-body p {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--accent-2);
+  margin-top: 16px;
+  line-height: 1.5;
+  text-shadow: 0 0 8px rgba(125,211,252,0.5);
+  animation: textPulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes textPulse {
+  0% { text-shadow: 0 0 6px rgba(125,211,252,0.3); }
+  50% { text-shadow: 0 0 18px rgba(125,211,252,0.7); }
+  100% { text-shadow: 0 0 6px rgba(125,211,252,0.3); }
+}
+
+/* Footer Button */
+.anomaly-footer {
+  margin-top: 28px;
+}
+
+.anomaly-footer .btn-primary {
+  font-size: 1.1rem;
+  padding: 14px 24px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #000;
+  border-radius: 14px;
+  box-shadow: 0 0 20px rgba(125,211,252,0.5);
+  transition: all 0.2s ease;
+}
+
+.anomaly-footer .btn-primary:hover {
+  transform: scale(1.08) rotateZ(-1deg);
+  box-shadow: 0 0 32px rgba(125,211,252,0.7), 0 0 48px rgba(167,139,250,0.6);
+}
+
+/* Sparkles */
+.sparkles span {
+  position: absolute;
+  display: block;
+  width: 6px;
+  height: 6px;
+  background: var(--accent-2);
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: sparkle 2s infinite;
+}
+
+.sparkles span:nth-child(1) { top:10%; left:15%; animation-delay:0s; }
+.sparkles span:nth-child(2) { top:25%; left:80%; animation-delay:0.4s; }
+.sparkles span:nth-child(3) { top:70%; left:20%; animation-delay:0.8s; }
+.sparkles span:nth-child(4) { top:60%; left:75%; animation-delay:1.2s; }
+.sparkles span:nth-child(5) { top:40%; left:50%; animation-delay:1.6s; }
+
+@keyframes sparkle {
+  0% { transform: scale(0.5) rotate(0deg); opacity: 0.5; }
+  50% { transform: scale(1.2) rotate(180deg); opacity: 1; }
+  100% { transform: scale(0.5) rotate(360deg); opacity: 0.5; }
+}
+
+
+/* ===============================
+   Inputs & Interactive Elements
+================================= */
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--accent-2);
+  box-shadow: 0 0 12px rgba(167,139,250,0.5);
+}
+
+/* ===============================
+   Smooth Screen Transitions
+================================= */
+.screen {
+  opacity: 0;
+  transform: translateY(15px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.screen.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===============================
+   Tooltips Enhancement
+================================= */
+#draft-table th[title]:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-10px) scale(1.05);
+  transition: all 0.25s ease;
+}

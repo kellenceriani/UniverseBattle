@@ -367,35 +367,7 @@ input::placeholder {
   margin-top: 16px;
 }
 
-/* ===============================
-   ANOMALY MODAL
-================================= */
 
-#anomaly-container {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.75);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 50;
-}
-
-#anomaly-container.Hider {
-  display: none;
-}
-
-#anomaly-container .panel {
-  max-width: 420px;
-  text-align: center;
-  border: 1px solid var(--accent-2);
-}
-
-#anomaly-message {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--accent-2);
-}
 
 /* ===============================
    FINAL SCREEN
@@ -463,4 +435,87 @@ input::placeholder {
   #universe {
     font-size: 1.3rem;
   }
+}
+/* ===============================
+   EXTRA MODES CHECKBOXES
+================================= */
+.extra-modes {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  background: var(--bg-panel);
+}
+
+.extra-modes legend {
+  font-weight: 700;
+  color: var(--accent);
+  padding: 0 8px;
+}
+
+/* Custom checkbox styling */
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-left: 36px;
+  cursor: pointer;
+  font-size: 1rem;
+  user-select: none;
+  color: var(--text-main);
+  transition: color 0.2s ease;
+}
+
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkbox-container .checkmark {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 24px;
+  width: 24px;
+  background: var(--bg-soft);
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkbox-container .checkmark::after {
+  content: '';
+  width: 10px;
+  height: 16px;
+  border: solid var(--accent);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.checkbox-container input:checked ~ .checkmark {
+  background: var(--accent);
+  border-color: var(--accent-2);
+}
+
+.checkbox-container input:checked ~ .checkmark::after {
+  opacity: 1;
+}
+
+.checkbox-container:hover {
+  color: var(--accent-2);
+}
+
+.checkbox-container:hover .checkmark {
+  border-color: var(--accent-2);
 }
