@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -7,58 +8,66 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="extra.css" />
 </head>
+
 <body>
 
-<!-- Info Button (fixed on top-right) -->
-<button id="info-btn" title="How to Play">?</button>
+  <!-- Info Button (fixed on top-right) -->
+  <button id="info-btn" title="How to Play">?</button>
 
-<!-- Info Panel Modal -->
-<div id="info-panel" class="modal Hider">
-  <div class="panel modal-content">
-    <span id="close-info" class="close-btn">&times;</span>
-    <h2>⚔️ LineupWars: Universe Battle</h2>
+  <!-- Info Panel Modal -->
+  <div id="info-panel" class="modal Hider">
+    <div class="panel modal-content">
+      <span id="close-info" class="close-btn">&times;</span>
+      <h2>⚔️ LineupWars: Universe Battle</h2>
 
-<section>
-  <h3>🎮 Overview</h3>
-  <p>
-    Draft elite combatants into specialized roles and build the ultimate team. 
-    Mid-draft, a hidden universe is revealed, radically shifting the balance of power and forcing you to adapt your strategy. 
-    After the draft, your team faces off in a cinematic showdown where combat effectiveness, synergy, and adaptability determine who survives. 
-    Every choice counts—only one team will emerge victorious.
-  </p>
-</section>
+      <section>
+        <h3>🎮 Overview</h3>
+        <p>
+          Draft elite combatants into specialized roles and build the ultimate team.
+          Mid-draft, a hidden universe is revealed, radically shifting the balance of power and forcing you to adapt
+          your strategy.
+          After the draft, your team faces off in a cinematic showdown where combat effectiveness, synergy, and
+          adaptability determine who survives.
+          Every choice counts—only one team will emerge victorious.
+        </p>
+      </section>
 
-<section>
-  <h3>🧭 Roles</h3>
-  <p>
-    Each match selects 6 balanced combat roles from a large rotating pool: offense, defense, control, tactics, mobility, and wildcard. 
-    Roles are revealed before drafting, and snake order applies. 
-    Success depends not just on individual strength, but on team composition, role synergy, and how well your fighters can adapt to changing circumstances.
-  </p>
-</section>
+      <section>
+        <h3>🧭 Roles</h3>
+        <p>
+          Each match selects 6 balanced combat roles from a large rotating pool: offense, defense, control, tactics,
+          mobility, and wildcard.
+          Roles are revealed before drafting, and snake order applies.
+          Success depends not just on individual strength, but on team composition, role synergy, and how well your
+          fighters can adapt to changing circumstances.
+        </p>
+      </section>
 
-<section>
-  <h3>🌌 Universe Reveal</h3>
-  <p>
-    A random universe is chosen at game start but remains hidden until mid-draft. 
-    Once revealed, the universe dramatically influences the final battle, affecting terrain, rules, and environmental hazards. 
-    Teams must adjust strategies and leverage their strengths to survive in a world that could turn familiar tactics upside down.
-  </p>
-</section>
+      <section>
+        <h3>🌌 Universe Reveal</h3>
+        <p>
+          A random universe is chosen at game start but remains hidden until mid-draft.
+          Once revealed, the universe dramatically influences the final battle, affecting terrain, rules, and
+          environmental hazards.
+          Teams must adjust strategies and leverage their strengths to survive in a world that could turn familiar
+          tactics upside down.
+        </p>
+      </section>
 
 
-    <section>
-      <h3>🧠 Extra Modes</h3>
-      <ul>
-        <li><strong>Anomaly Shift:</strong> One role mutates after the draft.</li>
-        <li><strong>Execution Order:</strong> Secretly execute a character name before drafting.</li>
-        <li><strong>Chaos Draft:</strong> Draft order reshuffles mid-draft.</li>
-      </ul>
-    </section>
+      <section>
+        <h3>🧠 Extra Modes</h3>
+        <ul>
+          <li><strong>Anomaly Shift:</strong> One role mutates after the draft.</li>
+          <li><strong>Execution Order:</strong> Secretly execute a character name before drafting.</li>
+          <li><strong>Chaos Draft:</strong> Draft order reshuffles every turn mid-draft. Also may pick for Opposition.
+          </li>
+        </ul>
+      </section>
+    </div>
   </div>
-</div>
 
-<br>
+  <br>
   <main id="app">
 
     <!-- SETUP SCREEN -->
@@ -70,60 +79,53 @@
 
         <label>
           Number of Players (2–6):
-          <input
-            type="number"
-            id="player-count"
-            min="2"
-            max="6"
-            value="2"
-            required
-          />
+          <input type="number" id="player-count" min="2" max="6" value="2" required />
         </label>
 
         <div id="player-names-container"></div>
 
         <hr />
 
-<!-- Draft Category Input -->
-<label for="category-input">
-  Draft Category (optional):
-  <input type="text" id="category-input" placeholder="e.g., Pokémon" />
-</label>
+        <!-- Draft Category Input -->
+        <label for="category-input">
+          Draft Category (optional):
+          <input type="text" id="category-input" placeholder="e.g., Pokémon" />
+        </label>
 
-<fieldset>
-  <legend>Draft Configuration</legend>
-  <p>
-    Six combat roles will be randomly selected from the master pool and remain fixed for the entire draft. 
-    When building your team, keep in mind: character’s fit for their role is (~60%), followed by adaptability to the universe and terrain (~20%), team synergy (~10%), and overall strength (~10%). 
-    Balancing these factors is key to creating a winning team.
-  </p>
-</fieldset>
+        <fieldset>
+          <legend>Draft Configuration</legend>
+          <p>
+            Six combat roles will be randomly selected from the master pool and remain fixed for the entire draft.
+            When building your team, keep in mind: character’s fit for their role is (~60%), followed by adaptability to
+            the universe and terrain (~20%), team synergy (~10%), and overall strength (~10%).
+            Balancing these factors is key to creating a winning team.
+          </p>
+        </fieldset>
 
 
         <hr />
 
-<fieldset class="extra-modes">
-  <legend>Extra Modes</legend>
-  
-  <label class="checkbox-container">
-    🔮 Anomaly Shift
-    <input type="checkbox" name="xtra-mode" value="anomaly" />
-    <span class="checkmark"></span>
-  </label>
+        <fieldset class="extra-modes">
+          <legend>Extra Modes</legend>
 
-  <label class="checkbox-container">
-    ☠️ Execution Order
-    <input type="checkbox" name="xtra-mode" value="execution" />
-    <span class="checkmark"></span>
-  </label>
+          <label class="checkbox-container">
+            🔮 Anomaly Shift
+            <input type="checkbox" name="xtra-mode" value="anomaly" />
+            <span class="checkmark"></span>
+          </label>
 
-  <label class="checkbox-container">
-    🔀 Chaos Draft
-    <input type="checkbox" name="xtra-mode" value="chaos" />
-    <span class="checkmark"></span>
-  </label>
-</fieldset>
+          <label class="checkbox-container">
+            ☠️ Execution Order
+            <input type="checkbox" name="xtra-mode" value="execution" />
+            <span class="checkmark"></span>
+          </label>
 
+          <label class="checkbox-container">
+            🔀 Chaos Draft
+            <input type="checkbox" name="xtra-mode" value="chaos" />
+            <span class="checkmark"></span>
+          </label>
+        </fieldset>
 
         <button type="submit" class="btn-primary">Start Draft</button>
       </form>
@@ -138,9 +140,6 @@
       </p>
       <div id="execution-entry-area"></div>
     </section>
-
-
-
 
 
     <!-- DRAFT SCREEN -->
@@ -161,14 +160,14 @@
           <strong>Current Role:</strong>
           <span id="current-role"></span>
         </div>
-<div class="status-box">
-  <strong>Universe:</strong>
-  <span id="current-universe">???</span>
-  <span id="current-category">
-    <span id="category-label" style="color:#fff;"></span>
-    <span id="category-text" style="color:var(--accent);"></span>
-  </span>
-</div>
+        <div class="status-box">
+          <strong>Universe:</strong>
+          <span id="current-universe">???</span>
+          <span id="current-category">
+            <span id="category-label" style="color:#fff;"></span>
+            <span id="category-text" style="color:var(--accent);"></span>
+          </span>
+        </div>
 
 
       </div>
@@ -191,12 +190,7 @@
         <label for="character-input">
           Enter character for <span id="input-role"></span>:
         </label>
-        <input
-          type="text"
-          id="character-input"
-          required
-          autocomplete="off"
-        />
+        <input type="text" id="character-input" required autocomplete="off" />
         <button type="submit" class="btn-primary">Confirm Pick</button>
       </form>
     </section>
@@ -208,13 +202,12 @@
       <div id="final-crews"></div>
 
       <br>
-      <h2>🤖 ChatGPT Battle Evaluation Prompt</h2><h4><div id="final-universe"></div></h4>
+      <h2>🤖 ChatGPT Battle Evaluation Prompt</h2>
+      <h4>
+        <div id="final-universe"></div>
+      </h4>
       <div style="display:flex; flex-wrap:wrap; gap:0.5rem;">
-        <pre
-          id="chatgpt-prompt"
-          contenteditable="false"
-          tabindex="0"
-        ></pre>
+        <pre id="chatgpt-prompt" contenteditable="false" tabindex="0"></pre>
 
         <div style="display:flex; flex-direction:column; gap:0.5rem; min-width:160px;">
           <button id="copy-prompt-btn" class="btn-secondary">Copy</button>
@@ -228,42 +221,60 @@
 
   </main>
 
-<!-- Anomaly Shift Modal -->
-<div id="anomaly-container" class="Hider">
-  <div class="anomaly-backdrop"></div>
+  <!-- Anomaly Shift Modal -->
+  <div id="anomaly-container" class="Hider">
+    <div class="anomaly-backdrop"></div>
 
-  <div class="anomaly-modal">
-    <div class="anomaly-header">
-      <span class="anomaly-icon">🔮</span>
-      <h2>Anomaly Shift</h2>
-    </div>
+    <div class="anomaly-modal">
+      <div class="anomaly-header">
+        <span class="anomaly-icon">🔮</span>
+        <h2>Anomaly Shift</h2>
+      </div>
 
-    <div class="anomaly-body">
-      <p id="anomaly-message"></p>
-    </div>
+      <div class="anomaly-body">
+        <p id="anomaly-message"></p>
+      </div>
 
-    <div class="anomaly-footer">
-      <button id="anomaly-close-btn" class="btn-primary">Continue</button>
-    </div>
+      <div class="anomaly-footer">
+        <button id="anomaly-close-btn" class="btn-primary">Continue</button>
+      </div>
 
-    <!-- Decorative sparkles -->
-    <div class="sparkles">
-      <span></span><span></span><span></span><span></span><span></span>
+      <!-- Decorative sparkles -->
+      <div class="sparkles">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
     </div>
   </div>
-</div>
+
+  <!-- Chaos Shift Modal -->
+  <div id="chaos-container" class="modal Hider">
+    <div class="anomaly-backdrop"></div>
+    <div class="anomaly-modal">
+      <div class="anomaly-header">
+        <div class="anomaly-icon">⚡</div>
+        <h2>Chaos Draft Activated!</h2>
+      </div>
+      <div class="anomaly-body">
+        <p>The remaining picks are being reshuffled randomly across all players!</p>
+      </div>
+      <div class="anomaly-footer">
+        <button id="chaos-close-btn" class="btn-primary">Resume Draft</button>
+      </div>
+    </div>
+  </div>
 
 
-<script>
-  const infoBtn = document.getElementById('info-btn');
-  const infoPanel = document.getElementById('info-panel');
-  const closeInfo = document.getElementById('close-info');
+  <script>
+    const infoBtn = document.getElementById('info-btn');
+    const infoPanel = document.getElementById('info-panel');
+    const closeInfo = document.getElementById('close-info');
 
-  infoBtn.addEventListener('click', () => infoPanel.classList.remove('Hider'));
-  closeInfo.addEventListener('click', () => infoPanel.classList.add('Hider'));
-</script>
+    infoBtn.addEventListener('click', () => infoPanel.classList.remove('Hider'));
+    closeInfo.addEventListener('click', () => infoPanel.classList.add('Hider'));
+  </script>
 
 
   <script src="app.js"></script>
 </body>
+
 </html>

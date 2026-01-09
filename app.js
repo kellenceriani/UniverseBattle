@@ -178,6 +178,9 @@ let executionKills = new Set();
 let executionIndex = 0;
 
 let anomalyRoleIndex = null;
+let chaosActive = false;
+let chaosPool = []; // pool of remaining picks: {round, player}
+let chaosRound = null; // the round where chaos will trigger
 
 /* =========================
    UTILITIES
@@ -404,50 +407,127 @@ function revealUniverseIfNeeded() {
 
 pickForm.addEventListener("submit", e => {
   e.preventDefault();
+
   const name = characterInput.value.trim();
   if (!name) return;
 
   const lower = name.toLowerCase();
+
+  // Prevent duplicates
   for (const row of draftData) {
     for (const cell of row) {
       if (cell.character.toLowerCase() === lower) return;
     }
   }
 
-  const order = getPickOrder(currentRound);
-  const playerIndex = order[currentPickInRound];
+  let nextPick;
 
-  const cell = draftData[currentRound][playerIndex];
+  if (chaosActive) {
+    // Pick a random chaos cell for this submission (peek, not remove yet)
+    if (chaosPool.length === 0) {
+      // Chaos draft already done
+      chaosActive = false;
+      pickForm.innerHTML = "";
+
+      const continueBtn = document.createElement("button");
+      continueBtn.textContent = "Continue to Final Screen";
+      continueBtn.className = "btn-primary";
+      continueBtn.onclick = () => finalizeDraft();
+
+      pickForm.appendChild(continueBtn);
+      return;
+    }
+
+    const idx = Math.floor(Math.random() * chaosPool.length);
+    nextPick = chaosPool[idx];
+
+  } else {
+    // Normal draft
+    const order = getPickOrder(currentRound);
+    const playerIndex = order[currentPickInRound];
+    nextPick = { round: currentRound, player: playerIndex };
+  }
+
+  // Assign character to the cell
+  const cell = draftData[nextPick.round][nextPick.player];
   cell.character = name;
   if (executionKills.has(lower)) cell.executed = true;
 
+  // Update draft table
   const td = draftTableBody.querySelector(
-    `td[data-round="${currentRound}"][data-player="${playerIndex}"]`
+    `td[data-round="${nextPick.round}"][data-player="${nextPick.player}"]`
   );
-  td.textContent = name;
-  if (cell.executed) td.textContent += " 💀";
+  td.textContent = name + (cell.executed ? " 💀" : "");
+  td.classList.add("filled");
+  if (cell.executed) td.classList.add("executed");
 
-  currentPickInRound++;
-  if (currentPickInRound >= playerCount) {
-    currentPickInRound = 0;
-    currentRound++;
+  // Advance pick
+  if (chaosActive) {
+    // Remove the filled cell from the pool
+    const poolIndex = chaosPool.findIndex(c => c.round === nextPick.round && c.player === nextPick.player);
+    if (poolIndex !== -1) chaosPool.splice(poolIndex, 1);
+
+    // If pool is empty, replace input with Continue button
+    if (chaosPool.length === 0) {
+      chaosActive = false;
+      pickForm.innerHTML = "";
+
+      const continueBtn = document.createElement("button");
+      continueBtn.textContent = "Continue to Final Screen";
+      continueBtn.className = "btn-primary";
+      continueBtn.onclick = () => finalizeDraft();
+
+      pickForm.appendChild(continueBtn);
+      return;
+    }
+
+    // Otherwise, pick the next random chaos cell for display
+    const nextIdx = Math.floor(Math.random() * chaosPool.length);
+    currentRound = chaosPool[nextIdx].round;
+    currentPickInRound = chaosPool[nextIdx].player;
+
+  } else {
+    // Normal draft: advance in snake order
+    currentPickInRound++;
+    if (currentPickInRound >= playerCount) {
+      currentPickInRound = 0;
+      currentRound++;
+    }
   }
 
+  // Reveal universe if needed
   revealUniverseIfNeeded();
 
-  if (currentRound >= roles.length) {
+  // Update draft info display
+  updateDraftInfo();
+
+  // Clear input
+  characterInput.value = "";
+
+  // Activate Chaos Draft mid-draft if needed
+if (!chaosActive && isChaosActive() && currentRound + 1 === chaosRound) {
+    chaosActive = true;
+    initChaosPool();
+
+    // Show Chaos modal once
+    const chaosModal = document.getElementById("chaos-container");
+    chaosModal.classList.remove("Hider");
+}
+
+
+  // Normal draft completion
+  if (!chaosActive && currentRound >= roles.length) {
     pickForm.style.display = "none";
     finalizeDraft();
-  } else {
-    updateDraftInfo();
-    characterInput.value = "";
   }
 });
+
 
 /* =========================
    FINALIZATION
 ========================= */
 
+/* ANOMALY SHIFT LOGIC*/
 function applyAnomalyShift() {
   if (!isModeActive("anomaly")) return;
   anomalyRoleIndex = Math.floor(Math.random() * roles.length);
@@ -469,6 +549,68 @@ function finalizeDraft() {
   } else {
     showFinalizeScreen();
   }
+}
+
+/*CHAOS DRAFT LOGIC*/
+function initChaosPool() {
+  chaosPool = [];
+  for (let r = currentRound; r < draftData.length; r++) {
+    for (let p = 0; p < playerCount; p++) {
+      if (!draftData[r][p].character) {
+        chaosPool.push({ round: r, player: p });
+      }
+    }
+  }
+}
+function getNextChaosPick() {
+  if (chaosPool.length === 0) return null;
+  const idx = Math.floor(Math.random() * chaosPool.length);
+  const next = chaosPool.splice(idx, 1)[0]; // remove from pool
+  currentRound = next.round;
+  currentPickInRound = next.player; // temporary, used for display
+  return next;
+}
+
+function isChaosActive() {
+  return isModeActive("chaos");
+}
+
+function triggerChaosDraft() {
+  if (!isChaosActive()) return;
+
+  // Show Chaos Modal
+  const chaosModal = document.getElementById("chaos-container");
+  chaosModal.classList.remove("Hider");
+
+  // Initialize pool of remaining picks
+  initChaosPool();
+
+  // Immediately pick first chaos cell
+  const firstChaos = getNextChaosPick();
+  currentRound = firstChaos.round;
+  currentPickInRound = firstChaos.player;
+
+  updateDraftInfo();
+}
+
+// Close Chaos Draft modal and resume
+document.getElementById("chaos-close-btn").onclick = () => {
+  document.getElementById("chaos-container").classList.add("Hider");
+  characterInput.focus();
+};
+
+/*EXECUTION LOGIC*/
+function updateDraftTableDisplay() {
+  draftData.forEach((row, r) => {
+    row.forEach((cell, p) => {
+      const td = draftTableBody.querySelector(
+        `td[data-round="${r}"][data-player="${p}"]`
+      );
+      td.textContent = cell.character || "—";
+      td.classList.toggle("executed", cell.executed);
+      if (cell.character) td.classList.add("filled");
+    });
+  });
 }
 
 function showFinalizeScreen() {
@@ -597,4 +739,9 @@ setupForm.addEventListener("submit", e => {
 
   if (isModeActive("execution")) startExecutionPhase();
   else showScreen(draftSection);
+
+  if (isModeActive("chaos")) {
+    chaosRound = Math.floor(Math.random() * 3) + 1; // random 1, 2, or 3
+  }
+
 });
