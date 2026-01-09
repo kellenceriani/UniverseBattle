@@ -121,10 +121,15 @@ const anomalyCloseBtn = document.getElementById("anomaly-close-btn");
 
 const modeCheckboxes = document.querySelectorAll('input[name="xtra-mode"]');
 
+const categoryInput = document.getElementById("category-input");
+const currentCategorySpan = document.getElementById("current-category");
+const currentCategoryLabel = document.getElementById("category-label");
+const currentCategoryText = document.getElementById("category-text");
+
+
 /* =========================
    STATE
 ========================= */
-
 let playerCount = 2;
 let players = [];
 let roles = [];
@@ -309,10 +314,26 @@ function buildDraftTable() {
 function updateDraftInfo() {
   const order = getPickOrder(currentRound);
   const playerIndex = order[currentPickInRound];
+
   currentPlayerSpan.textContent = players[playerIndex];
   currentRoleSpan.textContent = roles[currentRound];
   inputRoleSpan.textContent = roles[currentRound];
+
+  // Universe display
+  currentUniverseSpan.textContent = universeRevealed ? universe : "???";
+
+  // Category display
+  const cat = categoryInput.value.trim();
+  if (cat) {
+    currentCategoryLabel.textContent = " | Category: ";
+    currentCategoryText.textContent = cat;
+  } else {
+    currentCategoryLabel.textContent = "";
+    currentCategoryText.textContent = "";
+  }
 }
+
+
 
 function revealUniverseIfNeeded() {
   if (!universeRevealed && currentRound >= 2) {
@@ -423,6 +444,9 @@ function showFinalizeScreen() {
 function buildChatGPTPrompt() {
   let prompt = `Evaluate the following battle groups.\n\n`;
   prompt += `Universe: ${universe}\n\n`;
+
+  const draftCategory = categoryInput.value.trim(); // capture user input
+  if (draftCategory) prompt += `Category: ${draftCategory}\n\n`;
 
   if (executionKills.size > 0) {
     prompt += `☠️ Executed Characters: ${[...executionKills].join(", ")} (−50 effectiveness)\n\n`;

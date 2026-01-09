@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Battlebound: Multiverse Annihilation Draft</title>
+  <title>LineupWars: Universe Battle</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -15,7 +15,7 @@
 <div id="info-panel" class="modal Hider">
   <div class="panel modal-content">
     <span id="close-info" class="close-btn">&times;</span>
-    <h2>⚔️ Battlebound</h2>
+    <h2>⚔️ LineupWars: Universe Battle</h2>
 
 <section>
   <h3>🎮 Overview</h3>
@@ -62,7 +62,7 @@
 
     <!-- SETUP SCREEN -->
     <section id="setup-section" class="screen active panel">
-      <h1>Battlebound: Multiverse Annihilation Draft</h1>
+      <h1>LineupWars: Universe Battle</h1>
 
       <form id="setup-form">
         <hr />
@@ -82,6 +82,12 @@
         <div id="player-names-container"></div>
 
         <hr />
+
+<!-- Draft Category Input -->
+<label for="category-input">
+  Draft Category (optional):
+  <input type="text" id="category-input" placeholder="e.g., Pokémon" />
+</label>
 
 <fieldset>
   <legend>Draft Configuration</legend>
@@ -116,6 +122,10 @@
       <div id="execution-entry-area"></div>
     </section>
 
+
+
+
+
     <!-- DRAFT SCREEN -->
     <section id="draft-section" class="screen panel">
       <h1>Battle Draft</h1>
@@ -134,10 +144,16 @@
           <strong>Current Role:</strong>
           <span id="current-role"></span>
         </div>
-        <div class="status-box">
-          <strong>Universe:</strong>
-          <span id="current-universe">???</span>
-        </div>
+<div class="status-box">
+  <strong>Universe:</strong>
+  <span id="current-universe">???</span>
+  <span id="current-category">
+    <span id="category-label" style="color:#fff;"></span>
+    <span id="category-text" style="color:var(--accent);"></span>
+  </span>
+</div>
+
+
       </div>
 
       <div id="draft-table-wrapper">
