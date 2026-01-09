@@ -520,11 +520,11 @@ function buildChatGPTPrompt() {
 
   prompt += `
 Instructions:
-1. Assign Combat Effectiveness (0–100) for each unit considering:
-   - How well the character fits their role. (~50%)
+1. Assign Ratings (0–100) for each individual considering:
+   - How well the character fits their role. (~60%) <--IMPORTANT!
+   - Adaptability to the universe's rules, terrain, and environment. (~20%)
    - Team chemistry and synergy. (~10%)
-   - Adaptability to the universe's rules, terrain, and environment. (~25%)
- -Ability/strength in general. (15%)
+   - Ability/strength in general. (~10%)
 
 2. Rank teams strongest to weakest on paper with team OVRs.
 
@@ -536,12 +536,26 @@ Instructions:
 4. Identify:
    - MVP of the battle
    - Weakest link(s)
-   - Best synergy between units and roles
+   - Best synergy between individuals and roles
 
 5. Suggest 5–10 Battle Snubs that could have been drafted.
 
 Keep responses narrative, engaging, and structured like a cinematic battle report
 `;
+
+// ====== Append compact role descriptions used in this draft ======
+prompt += `\nRole Descriptions (for reference):\n`;
+
+// Use the roles as they appear in the draft, mapping to descriptions if available
+const finalRoles = [...new Set(draftData.map(row => row[0].role))]; // unique roles from first player in each row
+finalRoles.forEach(roleName => {
+  const roleObj = ROLE_POOL.find(r => r.name === roleName);
+  if (roleObj) prompt += `- ${roleObj.name}: ${roleObj.description}\n`;
+  else prompt += `- ${roleName}: (Anomalous role, use your interpretation.)\n`;
+});
+
+
+
   chatgptPromptPre.textContent = prompt;
 }
 
