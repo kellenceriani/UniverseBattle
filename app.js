@@ -340,6 +340,26 @@ function buildDraftTable() {
     draftTableBody.appendChild(tr);
   });
 }
+/* =========================
+   Highlight player
+========================= */
+
+function highlightActivePlayer(playerIndex) {
+  // Clear old highlights
+  document.querySelectorAll('.active-player')
+    .forEach(el => el.classList.remove('active-player'));
+
+  // Highlight header (player name)
+  const header = draftTableHead.children[playerIndex + 1];
+  if (header) header.classList.add('active-player');
+
+  // Highlight column cells
+  draftTableBody
+    .querySelectorAll(`td[data-player="${playerIndex}"]`)
+    .forEach(td => td.classList.add('active-player'));
+}
+
+
 
 /* =========================
    DRAFT FLOW
@@ -365,6 +385,9 @@ function updateDraftInfo() {
     currentCategoryLabel.textContent = "";
     currentCategoryText.textContent = "";
   }
+  currentPlayerSpan.classList.add("current-player");
+  currentRoleSpan.classList.add("current-role");
+  highlightActivePlayer(playerIndex);
 }
 
 
