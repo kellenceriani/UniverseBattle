@@ -3,7 +3,9 @@
 /* =========================
    CORE DATA
 ========================= */
-
+const chaosSettings = {
+  randomPlayer: true, // Change #1
+};
 const ROLE_POOL = [
   { name: "Swordsman", type: "offense", description: "Fights with blades using trained melee technique and timing." },
   { name: "Martial Artist", type: "offense", description: "Uses unarmed combat, strikes, and counters at close range." },
@@ -44,11 +46,11 @@ const ROLE_POOL = [
   { name: "Saboteur", type: "control", description: "Weakens enemies through traps and infrastructure damage." },
   { name: "Pyromancer", type: "offense", description: "Uses fire-based attacks for damage and area denial." },
   { name: "Cryomancer", type: "control", description: "Slows and restricts enemies using ice." },
-  { name: "Pirate", type: "mobility", description: "Fights with agility, improvisation, and aggressive close combat." },  
+  { name: "Pirate", type: "mobility", description: "Fights with agility, improvisation, and aggressive close combat." },
   { name: "Illusionist", type: "control", description: "Confuses enemies by manipulating perception." },
   { name: "Shaman", type: "support", description: "Uses spiritual magic to aid allies and hinder foes." },
   { name: "Ninja", type: "mobility", description: "Uses speed, stealth, and precision strikes to control fights." },
-  { name: "Esper", type: "control", description: "Uses psychic powers to manipulate enemies and the battlefield." },  
+  { name: "Esper", type: "control", description: "Uses psychic powers to manipulate enemies and the battlefield." },
   { name: "Sentinel", type: "defense", description: "Holds strategic positions and denies enemy advances." },
   { name: "Artillery", type: "offense", description: "Delivers long-range area damage with heavy weapons." },
   { name: "Ki Warrior", type: "offense", description: "Channels inner energy to enhance strikes and unleash powerful attacks." },
@@ -58,55 +60,55 @@ const ROLE_POOL = [
 
 
 const ANOMALY_MUTATIONS = [
-"Pack Mule",
-"Arrow Sponge",
-"Door Kicker",
-"Meat Shield",
-"Loot Goblin",
-"Button Presser",
-"Map Guy",
-"Banner Holder",
-"Trap Tester",
-"Backup Healer",
-"Potion Chugger",
-"Last Resort",
-"Frontline Filler",
-"Distraction Unit",
-"Emergency Tank",
-"Scout Who Dies First",
-"Morale Booster",
-"Ammo Carrier",
-"Rear Guard",
-"Cleanup Crew"
+  "Pack Mule",
+  "Arrow Sponge",
+  "Door Kicker",
+  "Meat Shield",
+  "Loot Goblin",
+  "Button Presser",
+  "Map Guy",
+  "Banner Holder",
+  "Trap Tester",
+  "Backup Healer",
+  "Potion Chugger",
+  "Last Resort",
+  "Frontline Filler",
+  "Distraction Unit",
+  "Emergency Tank",
+  "Scout Who Dies First",
+  "Morale Booster",
+  "Ammo Carrier",
+  "Rear Guard",
+  "Cleanup Crew"
 ];
 
 const UNIVERSES = [
   // Sci-Fi
-  "Warhammer 40,000","Star Wars","Dune","Halo","Mass Effect","Star Trek","The Expanse","Blade Runner","The Matrix",
-  "Ghost in the Shell","Altered Carbon","Cyberpunk 2077","Akira",
+  "Warhammer 40,000", "Star Wars", "Dune", "Halo", "Mass Effect", "Star Trek", "The Expanse", "Blade Runner", "The Matrix",
+  "Ghost in the Shell", "Altered Carbon", "Cyberpunk 2077", "Akira",
 
   // Fantasy
-  "The Witcher","Elden Ring","Lord of the Rings","Game of Thrones","Harry Potter","The Elder Scrolls",
-  "Dark Souls","Percy Jackson","Avatar: The Last Airbender","Alice in Wonderland","Dark Crystal","Labyrinth","Little Nightmares",
-  "Spirited Away","The Legend of Zelda","Kingdom Hearts","Super Mario Galaxy","Portal",
+  "The Witcher", "Elden Ring", "Lord of the Rings", "Game of Thrones", "Harry Potter", "The Elder Scrolls",
+  "Dark Souls", "Percy Jackson", "Avatar: The Last Airbender", "Alice in Wonderland", "Dark Crystal", "Labyrinth", "Little Nightmares",
+  "Spirited Away", "The Legend of Zelda", "Kingdom Hearts", "Super Mario Galaxy", "Portal",
 
   // Anime / Manga
-  "Naruto","One Piece","Dragon Ball","Attack on Titan","My Hero Academia","Bleach","Fullmetal Alchemist","Demon Slayer","Berserk (Guts)",
+  "Naruto", "One Piece", "Dragon Ball", "Attack on Titan", "My Hero Academia", "Bleach", "Fullmetal Alchemist", "Demon Slayer", "Berserk (Guts)",
 
   // Mythology / History
-  "Greek Mythology","Roman Empire","Viking Age","Norse Mythology","Egyptian Mythology","Medieval Europe","Samurai Japan","Mayan Civilization","Aztec Empire",
+  "Greek Mythology", "Roman Empire", "Viking Age", "Norse Mythology", "Egyptian Mythology", "Medieval Europe", "Samurai Japan", "Mayan Civilization", "Aztec Empire",
 
   // Superheroes / Comics
-  "Marvel Universe","DC Universe","The Boys","Invincible","The Incredibles",
+  "Marvel Universe", "DC Universe", "The Boys", "Invincible", "The Incredibles",
 
   // Post-Apocalyptic / Survival
-  "Mad Max","Fallout","The Walking Dead","Metro 2033","Horizon Zero Dawn","The Last of Us","Stranger Things","Gravity Falls",
+  "Mad Max", "Fallout", "The Walking Dead", "Metro 2033", "Horizon Zero Dawn", "The Last of Us", "Stranger Things", "Gravity Falls",
 
   // Gaming / Misc / Other Worlds
-  "Minecraft","Terraria","Roblox","Pokémon","Digimon","Yu-Gi-Oh","Warcraft","Mario","Doctor Strange Multiverse","Noita",
+  "Minecraft", "Terraria", "Roblox", "Pokémon", "Digimon", "Yu-Gi-Oh", "Warcraft", "Mario", "Doctor Strange Multiverse", "Noita",
 
   // US Cartoons
-  "The Simpsons","Adventure Time","Gravity Falls","Rick and Morty"
+  "The Simpsons", "Adventure Time", "Gravity Falls", "Rick and Morty"
 ];
 
 
@@ -160,6 +162,15 @@ const currentCategorySpan = document.getElementById("current-category");
 const currentCategoryLabel = document.getElementById("category-label");
 const currentCategoryText = document.getElementById("category-text");
 
+const chaosCheckbox = document.querySelector('input[value="chaos"]');
+const chaosSettingsModal = document.getElementById("chaos-settings-modal");
+const chaosSettingsClose = document.getElementById("chaos-settings-close");
+const chaosSettingsSave = document.getElementById("chaos-settings-save");
+
+const chaosRandomPlayerCheckbox = document.getElementById("chaos-random-player");
+const chaosPlayerColumnCheckbox = document.getElementById("chaos-player-column");
+const chaosPlayerRoundCheckbox = document.getElementById("chaos-current-round");
+const chaosStartRangeSelect = document.getElementById("chaos-start-range");
 
 /* =========================
    STATE
@@ -209,6 +220,30 @@ function getPickOrder(round) {
   const order = [...Array(playerCount).keys()];
   return round % 2 === 0 ? order : order.reverse();
 }
+
+/*CHAOS MODAL*/
+chaosCheckbox.addEventListener("click", () => {
+  if (chaosCheckbox.checked) {
+    chaosSettingsModal.classList.remove("Hider");
+  }
+});
+chaosSettingsClose.onclick = () => {
+  chaosSettingsModal.classList.add("Hider");
+};
+chaosSettingsSave.onclick = () => {
+  chaosSettings.randomPlayer = chaosRandomPlayerCheckbox.checked;
+  chaosSettingsModal.classList.add("Hider");
+};
+
+
+function parseChaosStartRange(value) {
+  const parts = value.split("-").map(Number);
+  if (parts.length === 1) return { min: parts[0], max: parts[0] };
+  return { min: parts[0], max: parts[1] };
+}
+
+
+
 
 /* =========================
    SETUP
@@ -405,6 +440,8 @@ function revealUniverseIfNeeded() {
   }
 }
 
+let chaosCurrentRound; // tracks the "current round" for chaos picks when onlyCurrentRound is checked
+
 pickForm.addEventListener("submit", e => {
   e.preventDefault();
 
@@ -423,10 +460,11 @@ pickForm.addEventListener("submit", e => {
   let nextPick;
 
   if (chaosActive) {
-    // Pick a random chaos cell for this submission (peek, not remove yet)
+    // Pick a chaos cell for this submission
     if (chaosPool.length === 0) {
       // Chaos draft already done
       chaosActive = false;
+      chaosCurrentRound = undefined;
       pickForm.innerHTML = "";
 
       const continueBtn = document.createElement("button");
@@ -438,8 +476,30 @@ pickForm.addEventListener("submit", e => {
       return;
     }
 
-    const idx = Math.floor(Math.random() * chaosPool.length);
-    nextPick = chaosPool[idx];
+    const onlyPlayerColumn = chaosPlayerColumnCheckbox.checked;
+    const onlyCurrentRound = chaosPlayerRoundCheckbox.checked;
+
+    // Initialize chaosCurrentRound if not already set
+    if (chaosCurrentRound === undefined) chaosCurrentRound = currentRound;
+
+    let sourcePool = chaosPool;
+
+    if (onlyPlayerColumn) {
+      const order = getPickOrder(currentRound);
+      const playerIndex = order[currentPickInRound];
+      sourcePool = sourcePool.filter(c => c.player === playerIndex);
+    }
+
+    if (onlyCurrentRound) {
+      sourcePool = sourcePool.filter(c => c.round === chaosCurrentRound);
+    }
+
+    // Safety fallback if filters empty
+    if (!sourcePool.length) sourcePool = chaosPool;
+
+    // Pick random cell from the filtered pool
+    const idx = Math.floor(Math.random() * sourcePool.length);
+    nextPick = sourcePool[idx];
 
   } else {
     // Normal draft
@@ -461,30 +521,55 @@ pickForm.addEventListener("submit", e => {
   td.classList.add("filled");
   if (cell.executed) td.classList.add("executed");
 
+  // ==== NEW: check if draft is fully complete right after filling ====
+  const allFilled = draftData.every(row => row.every(c => c.character));
+  if (allFilled) {
+    chaosActive = false;
+    pickForm.style.display = "none";
+
+    // Replace with Continue button for Chaos
+    if (chaosPool.length > 0) {
+      pickForm.innerHTML = "";
+      const continueBtn = document.createElement("button");
+      continueBtn.textContent = "Continue to Final Screen";
+      continueBtn.className = "btn-primary";
+      continueBtn.onclick = () => finalizeDraft();
+      pickForm.appendChild(continueBtn);
+    }
+
+    finalizeDraft();
+    return; // exit handler before advancing pick
+  }
+  // ===================================================================
+
   // Advance pick
   if (chaosActive) {
     // Remove the filled cell from the pool
     const poolIndex = chaosPool.findIndex(c => c.round === nextPick.round && c.player === nextPick.player);
     if (poolIndex !== -1) chaosPool.splice(poolIndex, 1);
 
-    // If pool is empty, replace input with Continue button
-    if (chaosPool.length === 0) {
-      chaosActive = false;
-      pickForm.innerHTML = "";
-
-      const continueBtn = document.createElement("button");
-      continueBtn.textContent = "Continue to Final Screen";
-      continueBtn.className = "btn-primary";
-      continueBtn.onclick = () => finalizeDraft();
-
-      pickForm.appendChild(continueBtn);
-      return;
+    // Update chaosCurrentRound if "only current round" is active
+    if (chaosPlayerRoundCheckbox.checked) {
+      const remainingInRound = chaosPool.some(c => c.round === chaosCurrentRound);
+      if (!remainingInRound) {
+        const nextRounds = chaosPool.map(c => c.round);
+        chaosCurrentRound = nextRounds.length ? Math.min(...nextRounds) : undefined;
+      }
     }
 
-    // Otherwise, pick the next random chaos cell for display
-    const nextIdx = Math.floor(Math.random() * chaosPool.length);
-    currentRound = chaosPool[nextIdx].round;
-    currentPickInRound = chaosPool[nextIdx].player;
+    // Pick next chaos cell for display
+    if (chaosSettings.randomPlayer) {
+      const nextIdx = Math.floor(Math.random() * chaosPool.length);
+      currentRound = chaosPool[nextIdx].round;
+      currentPickInRound = chaosPool[nextIdx].player;
+    } else {
+      // Snake order continues
+      currentPickInRound++;
+      if (currentPickInRound >= playerCount) {
+        currentPickInRound = 0;
+        currentRound++;
+      }
+    }
 
   } else {
     // Normal draft: advance in snake order
@@ -505,22 +590,19 @@ pickForm.addEventListener("submit", e => {
   characterInput.value = "";
 
   // Activate Chaos Draft mid-draft if needed
-if (!chaosActive && isChaosActive() && currentRound + 1 === chaosRound) {
+  if (!chaosActive && isChaosActive() && currentRound + 1 === chaosRound) {
     chaosActive = true;
+    chaosCurrentRound = undefined; // reset for new chaos batch
     initChaosPool();
 
     // Show Chaos modal once
     const chaosModal = document.getElementById("chaos-container");
     chaosModal.classList.remove("Hider");
-}
-
-
-  // Normal draft completion
-  if (!chaosActive && currentRound >= roles.length) {
-    pickForm.style.display = "none";
-    finalizeDraft();
   }
 });
+
+
+
 
 
 /* =========================
@@ -685,16 +767,16 @@ Instructions:
 Keep responses narrative, engaging, and structured like a cinematic battle report
 `;
 
-// ====== Append compact role descriptions used in this draft ======
-prompt += `\nRole Descriptions (for reference):\n`;
+  // ====== Append compact role descriptions used in this draft ======
+  prompt += `\nRole Descriptions (for reference):\n`;
 
-// Use the roles as they appear in the draft, mapping to descriptions if available
-const finalRoles = [...new Set(draftData.map(row => row[0].role))]; // unique roles from first player in each row
-finalRoles.forEach(roleName => {
-  const roleObj = ROLE_POOL.find(r => r.name === roleName);
-  if (roleObj) prompt += `- ${roleObj.name}: ${roleObj.description}\n`;
-  else prompt += `- ${roleName}: (Anomalous role, use your interpretation.)\n`;
-});
+  // Use the roles as they appear in the draft, mapping to descriptions if available
+  const finalRoles = [...new Set(draftData.map(row => row[0].role))]; // unique roles from first player in each row
+  finalRoles.forEach(roleName => {
+    const roleObj = ROLE_POOL.find(r => r.name === roleName);
+    if (roleObj) prompt += `- ${roleObj.name}: ${roleObj.description}\n`;
+    else prompt += `- ${roleName}: (Anomalous role, use your interpretation.)\n`;
+  });
 
 
 
@@ -740,8 +822,11 @@ setupForm.addEventListener("submit", e => {
   if (isModeActive("execution")) startExecutionPhase();
   else showScreen(draftSection);
 
-  if (isModeActive("chaos")) {
-    chaosRound = Math.floor(Math.random() * 3) + 1; // random 1, 2, or 3
-  }
+if (isModeActive("chaos")) {
+  const range = parseChaosStartRange(chaosStartRangeSelect.value);
+  // Pick a random round within the range
+  chaosRound = Math.floor(Math.random() * (range.max - range.min + 1)) + range.min;
+}
+
 
 });
