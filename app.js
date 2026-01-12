@@ -745,26 +745,31 @@ function buildChatGPTPrompt() {
   prompt += `
 Instructions:
 1. Assign Ratings (0–100) for each individual considering:
-   - How well the character fits their role. (~60%) <--IMPORTANT!
-   - Adaptability to the universe's rules, terrain, and environment. (~20%)
-   - Team chemistry and synergy. (~10%)
-   - Ability/strength in general. (~10%)
+   - Role Fit (~60%): How effectively the character performs their assigned role within the universe. 
+     Prioritize role-relevant skills, tactics, and coordination over raw strength. 
+     Example: A physically strong character may be less effective as Commander than a strategic leader.
+   - Universe Adaptability (~20%): How well the character’s abilities work under the universe's rules, terrain, and environment. 
+     Overpowered abilities that break universe physics or logic should be downgraded.
+   - Team Chemistry & Synergy (~10%): How the character complements teammates’ roles and strategies.
+   - General Ability / Strength (~10%): Physical or magical power, but do not let this outweigh role performance.
 
-2. Rank teams strongest to weakest on paper with team OVRs.
+2. Rank teams from strongest to weakest on paper using overall team ratings.
 
-3. Simulate a quick 5-6 sentence cinematic battle between all teams:
-   - Include at least one event that could realistically occur in the chosen universe
-   - Mix 60% randomness with 40% unit ratings
-   - Highlight notable tactical plays, teamwork, and failures 
+3. Simulate a brief cinematic battle (5–6 sentences) between all teams:
+   - Outcomes should be influenced ~60% by unit ratings and ~40% by unpredictable events or chance.
+   - Include at least one event consistent with the chosen universe.
+   - Highlight notable tactical plays, teamwork, mistakes, and failures.
 
 4. Identify:
    - MVP of the battle
    - Weakest link(s)
    - Best synergy between individuals and roles
 
-5. Suggest 5–10 Battle Snubs that could have been drafted.
+5. Suggest 5–10 Battle Snubs:
+   - Recommend characters who could have improved team role coverage, synergy, or universe-specific effectiveness.
+   - Do not simply suggest the most powerful characters; focus on complementary abilities and roles.
 
-Keep responses narrative, engaging, and structured like a cinematic battle report
+Keep responses narrative, engaging, and structured like a cinematic battle report.
 `;
 
   // ====== Append compact role descriptions used in this draft ======
@@ -777,8 +782,6 @@ Keep responses narrative, engaging, and structured like a cinematic battle repor
     if (roleObj) prompt += `- ${roleObj.name}: ${roleObj.description}\n`;
     else prompt += `- ${roleName}: (Anomalous role, use your interpretation.)\n`;
   });
-
-
 
   chatgptPromptPre.textContent = prompt;
 }
