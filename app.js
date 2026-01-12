@@ -171,6 +171,7 @@ const chaosRandomPlayerCheckbox = document.getElementById("chaos-random-player")
 const chaosPlayerColumnCheckbox = document.getElementById("chaos-player-column");
 const chaosPlayerRoundCheckbox = document.getElementById("chaos-current-round");
 const chaosStartRangeSelect = document.getElementById("chaos-start-range");
+const chaosStartBeginningCheckbox = document.getElementById("chaos-start-beginning");
 
 /* =========================
    STATE
@@ -242,7 +243,22 @@ function parseChaosStartRange(value) {
   return { min: parts[0], max: parts[1] };
 }
 
+// When one is clicked, disable the other
+chaosPlayerColumnCheckbox.addEventListener("change", () => {
+  if (chaosPlayerColumnCheckbox.checked) {
+    chaosPlayerRoundCheckbox.disabled = true;
+  } else {
+   chaosPlayerRoundCheckbox.disabled = false;
+  }
+});
 
+chaosPlayerRoundCheckbox.addEventListener("change", () => {
+  if (chaosPlayerRoundCheckbox.checked) {
+    chaosPlayerColumnCheckbox.disabled = true;
+  } else {
+    chaosPlayerColumnCheckbox.disabled = false;
+  }
+});
 
 
 /* =========================
@@ -590,15 +606,27 @@ pickForm.addEventListener("submit", e => {
   characterInput.value = "";
 
   // Activate Chaos Draft mid-draft if needed
-  if (!chaosActive && isChaosActive() && currentRound + 1 === chaosRound) {
+if (!chaosActive && isChaosActive() && currentRound + 1 === chaosRound) {
+  if (chaosStartBeginningCheckbox.checked) {
+    // Force chaos on the first pick of this round
+    currentPickInRound = 0;
     chaosActive = true;
-    chaosCurrentRound = undefined; // reset for new chaos batch
+    chaosCurrentRound = undefined;
     initChaosPool();
 
-    // Show Chaos modal once
+    const chaosModal = document.getElementById("chaos-container");
+    chaosModal.classList.remove("Hider");
+    updateDraftInfo();
+  } else {
+    // Original mid-round chaos trigger
+    chaosActive = true;
+    chaosCurrentRound = undefined;
+    initChaosPool();
     const chaosModal = document.getElementById("chaos-container");
     chaosModal.classList.remove("Hider");
   }
+}
+
 });
 
 
@@ -827,9 +855,27 @@ setupForm.addEventListener("submit", e => {
 
 if (isModeActive("chaos")) {
   const range = parseChaosStartRange(chaosStartRangeSelect.value);
-  // Pick a random round within the range
-  chaosRound = Math.floor(Math.random() * (range.max - range.min + 1)) + range.min;
+
+  if (chaosStartBeginningCheckbox.checked) {
+    // Trigger on first pick of round: pick a random round in range
+    chaosRound = Math.floor(Math.random() * (range.max - range.min + 1)) + range.min;
+    // Ensure chaos triggers on first pick of the round
+    currentRound = 0;
+    currentPickInRound = 0;
+    if (chaosRound === 1) {
+      chaosActive = true;
+      chaosCurrentRound = undefined;
+      initChaosPool();
+      const chaosModal = document.getElementById("chaos-container");
+      chaosModal.classList.remove("Hider");
+      updateDraftInfo();
+    }
+  } else {
+    // Original random round selection mid-draft
+    chaosRound = Math.floor(Math.random() * (range.max - range.min + 1)) + range.min;
+  }
 }
+
 
 
 });
