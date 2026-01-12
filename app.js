@@ -7,55 +7,55 @@ const chaosSettings = {
   randomPlayer: true, // Change #1
 };
 const ROLE_POOL = [
-  { name: "Swordsman", type: "offense", description: "Fights with blades using trained melee technique and timing." },
-  { name: "Martial Artist", type: "offense", description: "Uses unarmed combat, strikes, and counters at close range." },
-  { name: "Shieldbearer", type: "defense", description: "Blocks attacks and protects allies with defensive positioning." },
-  { name: "Spellblade", type: "offense", description: "Combines weapon combat with limited magical enhancement." },
-  { name: "Magician", type: "control", description: "Casts prepared spells to alter enemies and terrain." },
-  { name: "Elementalist", type: "control", description: "Manipulates fire, ice, lightning, or earth to control battle flow." },
-  { name: "Summoner", type: "tactics", description: "Calls and commands creatures to fight on their behalf." },
-  { name: "Sniper", type: "offense", description: "Eliminates targets from extreme range with precision shots." },
-  { name: "Grappler", type: "control", description: "Restrains enemies through throws, holds, and clinches." },
-  { name: "Assassin", type: "mobility", description: "Uses stealth and positioning to eliminate priority targets." },
-  { name: "Thief", type: "mobility", description: "Relies on speed, tools, and opportunistic attacks." },
-  { name: "Trickster", type: "control", description: "Disrupts enemies using deception, feints, and illusions." },
-  { name: "Beast Tamer", type: "tactics", description: "Fights alongside trained animals or creatures." },
-  { name: "Engineer", type: "tactics", description: "Uses machines, traps, and devices to shape combat." },
-  { name: "Alchemist", type: "wildcard", description: "Employs chemical mixtures with varied combat effects." },
-  { name: "Brawler", type: "offense", description: "Engages enemies with raw strength and durability." },
-  { name: "Monk", type: "defense", description: "Uses discipline and technique to endure and evade attacks." },
-  { name: "Hexer", type: "control", description: "Inflicts curses that weaken or hinder enemies." },
-  { name: "Skirmisher", type: "mobility", description: "Fights with speed, spacing, and repeated engagements." },
-  { name: "Rune Knight", type: "defense", description: "Uses inscribed runes to enhance armor and weapons." },
-  { name: "Necromancer", type: "tactics", description: "Controls undead forces and benefits from battlefield deaths." },
-  { name: "Gunslinger", type: "offense", description: "Specializes in firearms and rapid precision fire." },
-  { name: "Duelist", type: "offense", description: "Specializes in single-target melee combat." },
-  { name: "Paladin", type: "defense", description: "Defensive warrior who protects allies and holds the line." },
-  { name: "Scout", type: "mobility", description: "Gathers information and harasses enemies with speed." },
-  { name: "Pactbound", type: "wildcard", description: "Gains power through binding agreements with higher forces." },
-  { name: "Archer", type: "offense", description: "Uses bows to attack enemies from mid to long range." },
-  { name: "Spearman", type: "offense", description: "Controls distance with long-reaching melee weapons." },
-  { name: "Berserker", type: "offense", description: "Trades defense for overwhelming aggressive power." },
-  { name: "Knight", type: "defense", description: "Heavily armored frontline combatant." },
-  { name: "Guardian", type: "defense", description: "Prioritizes ally protection over dealing damage." },
-  { name: "Healer", type: "support", description: "Restores health and sustains allies in battle." },
-  { name: "Medic", type: "support", description: "Provides rapid battlefield treatment and recovery." },
-  { name: "Commander", type: "tactics", description: "Directs allies and improves coordination." },
-  { name: "Warlord", type: "tactics", description: "Leads through force, presence, and battlefield control." },
-  { name: "Raider", type: "mobility", description: "Specializes in fast attacks and disruption." },
-  { name: "Saboteur", type: "control", description: "Weakens enemies through traps and infrastructure damage." },
-  { name: "Pyromancer", type: "offense", description: "Uses fire-based attacks for damage and area denial." },
-  { name: "Cryomancer", type: "control", description: "Slows and restricts enemies using ice." },
-  { name: "Pirate", type: "mobility", description: "Fights with agility, improvisation, and aggressive close combat." },
-  { name: "Illusionist", type: "control", description: "Confuses enemies by manipulating perception." },
-  { name: "Shaman", type: "support", description: "Uses spiritual magic to aid allies and hinder foes." },
-  { name: "Ninja", type: "mobility", description: "Uses speed, stealth, and precision strikes to control fights." },
-  { name: "Esper", type: "control", description: "Uses psychic powers to manipulate enemies and the battlefield." },
-  { name: "Sentinel", type: "defense", description: "Holds strategic positions and denies enemy advances." },
-  { name: "Artillery", type: "offense", description: "Delivers long-range area damage with heavy weapons." },
-  { name: "Ki Warrior", type: "offense", description: "Channels inner energy to enhance strikes and unleash powerful attacks." },
-  { name: "Tactician", type: "tactics", description: "Wins battles through planning and adaptive strategy." },
-  { name: "Juggernaut", type: "defense", description: "Absorbs massive damage while advancing steadily." }
+  { name: "Swordsman", type: "offense", description: "Fights with blades using trained melee technique and timing.", icon: "⚔️" },
+  { name: "Martial Artist", type: "offense", description: "Uses unarmed combat, strikes, and counters at close range.", icon: "🥋" },
+  { name: "Shieldbearer", type: "defense", description: "Blocks attacks and protects allies with defensive positioning.", icon: "🛡️" },
+  { name: "Spellblade", type: "offense", description: "Combines weapon combat with limited magical enhancement.", icon: "🗡️✨" },
+  { name: "Magician", type: "control", description: "Casts prepared spells to alter enemies and terrain.", icon: "🪄" },
+  { name: "Elementalist", type: "control", description: "Manipulates fire, ice, lightning, or earth to control battle flow.", icon: "🌪️" },
+  { name: "Summoner", type: "tactics", description: "Calls and commands creatures to fight on their behalf.", icon: "🐺" },
+  { name: "Sniper", type: "offense", description: "Eliminates targets from extreme range with precision shots.", icon: "🎯" },
+  { name: "Grappler", type: "control", description: "Restrains enemies through throws, holds, and clinches.", icon: "🤼" },
+  { name: "Assassin", type: "mobility", description: "Uses stealth and positioning to eliminate priority targets.", icon: "🥷" },
+  { name: "Thief", type: "mobility", description: "Relies on speed, tools, and opportunistic attacks.", icon: "🕵️" },
+  { name: "Trickster", type: "control", description: "Disrupts enemies using deception, feints, and illusions.", icon: "🎭" },
+  { name: "Beast Tamer", type: "tactics", description: "Fights alongside trained animals or creatures.", icon: "🐾" },
+  { name: "Engineer", type: "tactics", description: "Uses machines, traps, and devices to shape combat.", icon: "⚙️" },
+  { name: "Alchemist", type: "wildcard", description: "Employs chemical mixtures with varied combat effects.", icon: "⚗️" },
+  { name: "Brawler", type: "offense", description: "Engages enemies with raw strength and durability.", icon: "🥊" },
+  { name: "Monk", type: "defense", description: "Uses discipline and technique to endure and evade attacks.", icon: "🧘" },
+  { name: "Hexer", type: "control", description: "Inflicts curses that weaken or hinder enemies.", icon: "🕯️" },
+  { name: "Skirmisher", type: "mobility", description: "Fights with speed, spacing, and repeated engagements.", icon: "🏃" },
+  { name: "Rune Knight", type: "defense", description: "Uses inscribed runes to enhance armor and weapons.", icon: "🔱" },
+  { name: "Necromancer", type: "tactics", description: "Controls undead forces and benefits from battlefield deaths.", icon: "☠️" },
+  { name: "Gunslinger", type: "offense", description: "Specializes in firearms and rapid precision fire.", icon: "🔫" },
+  { name: "Duelist", type: "offense", description: "Specializes in single-target melee combat.", icon: "🤺🗡️" },
+  { name: "Paladin", type: "defense", description: "Defensive warrior who protects allies and holds the line.", icon: "🛡️✝️" },
+  { name: "Scout", type: "mobility", description: "Gathers information and harasses enemies with speed.", icon: "🔭" },
+  { name: "Pactbound", type: "wildcard", description: "Gains power through binding agreements with higher forces.", icon: "📜" },
+  { name: "Archer", type: "offense", description: "Uses bows to attack enemies from mid to long range.", icon: "🏹" },
+  { name: "Spearman", type: "offense", description: "Controls distance with long-reaching melee weapons.", icon: "🪃" },
+  { name: "Berserker", type: "offense", description: "Trades defense for overwhelming aggressive power.", icon: "😡🔥" },
+  { name: "Knight", type: "defense", description: "Heavily armored frontline combatant.", icon: "🤴" },
+  { name: "Guardian", type: "defense", description: "Prioritizes ally protection over dealing damage.", icon: "🛡️" },
+  { name: "Healer", type: "support", description: "Restores health and sustains allies in battle.", icon: "❤️‍🩹" },
+  { name: "Medic", type: "support", description: "Provides rapid battlefield treatment and recovery.", icon: "🩺" },
+  { name: "Commander", type: "tactics", description: "Directs allies and improves coordination.", icon: "🎖️" },
+  { name: "Warlord", type: "tactics", description: "Leads through force, presence, and battlefield control.", icon: "🪖" },
+  { name: "Raider", type: "mobility", description: "Specializes in fast attacks and disruption.", icon: "🏴‍☠️" },
+  { name: "Saboteur", type: "control", description: "Weakens enemies through traps and infrastructure damage.", icon: "💣" },
+  { name: "Pyromancer", type: "offense", description: "Uses fire-based attacks for damage and area denial.", icon: "🔥" },
+  { name: "Cryomancer", type: "control", description: "Slows and restricts enemies using ice.", icon: "❄️" },
+  { name: "Pirate", type: "mobility", description: "Fights with agility, improvisation, and aggressive close combat.", icon: "🏴‍☠️" },
+  { name: "Illusionist", type: "control", description: "Confuses enemies by manipulating perception.", icon: "🃏" },
+  { name: "Shaman", type: "support", description: "Uses spiritual magic to aid allies and hinder foes.", icon: "🔮" },
+  { name: "Ninja", type: "mobility", description: "Uses speed, stealth, and precision strikes to control fights.", icon: "🥷" },
+  { name: "Esper", type: "control", description: "Uses psychic powers to manipulate enemies and the battlefield.", icon: "🧠" },
+  { name: "Sentinel", type: "defense", description: "Holds strategic positions and denies enemy advances.", icon: "🔰" },
+  { name: "Artillery", type: "offense", description: "Delivers long-range area damage with heavy weapons.", icon: "💣" },
+  { name: "Ki Warrior", type: "offense", description: "Channels inner energy to enhance strikes and unleash powerful attacks.", icon: "☯️" },
+  { name: "Tactician", type: "tactics", description: "Wins battles through planning and adaptive strategy.", icon: "♟️" },
+  { name: "Juggernaut", type: "defense", description: "Absorbs massive damage while advancing steadily.", icon: "🗿" }
 ];
 
 
@@ -424,8 +424,14 @@ function updateDraftInfo() {
   const playerIndex = order[currentPickInRound];
 
   currentPlayerSpan.textContent = players[playerIndex];
-  currentRoleSpan.textContent = roles[currentRound];
-  inputRoleSpan.textContent = roles[currentRound];
+  // Set role text and small inline icon metadata for CSS-driven animations
+  const roleName = roles[currentRound];
+  currentRoleSpan.textContent = roleName;
+  currentRoleSpan.dataset.role = roleName;
+  // Lookup icon from ROLE_POOL for easier scaling
+  const roleObj = ROLE_POOL.find(r => r.name === roleName);
+  currentRoleSpan.dataset.icon = (roleObj && roleObj.icon) ? roleObj.icon : "❓";
+  inputRoleSpan.textContent = roleName;
 
   // Universe display
   currentUniverseSpan.textContent = universeRevealed ? universe : "???";
